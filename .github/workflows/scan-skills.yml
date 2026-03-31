@@ -1,6 +1,11 @@
 name: Scan Skills for Security Threats
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - "plugins/human-compound/skills/**"
+      - "plugins/human-compound/agents/**"
   pull_request:
     paths:
       - "plugins/human-compound/skills/**"
