@@ -1,0 +1,32 @@
+{
+  "name": "ancs21-human-compound",
+  "owner": {
+    "name": "An Pham",
+    "url": "https://github.com/ancs21"
+  },
+  "metadata": {
+    "description": "Human-first, team-driven engineering plugin",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "human-compound",
+      "description": "Human-first, team-driven engineering plugin. All compound-engineering skills and agents plus GitHub-based team coordination.",
+      "author": {
+        "name": "An Pham",
+        "url": "https://github.com/ancs21"
+      },
+      "homepage": "https://github.com/ancs21/human-compound",
+      "tags": [
+        "ai-powered",
+        "human-compound",
+        "team-collaboration",
+        "workflow-automation",
+        "code-review",
+        "knowledge-management",
+        "github-coordination"
+      ],
+      "source": "."
+    }
+  ]
+}
