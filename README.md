@@ -19,7 +19,7 @@ No mandatory approvals. No heavyweight process. Just transparency.
 |-----------|-------|
 | Agents | 35+ |
 | Skills | 40+ |
-| GitHub Actions | 1 |
+| GitHub Actions | 2 |
 | Issue Templates | 2 |
 | PR Templates | 5 |
 
@@ -82,6 +82,7 @@ Copy the `.github/` directory from this plugin into your project repo:
 
 - `.github/CODEOWNERS` -- auto-assign reviewers
 - `.github/workflows/notify-artifact.yml` -- artifact notifications
+- `.github/workflows/scan-skills.yml` -- security scanning for skill/agent files via [cisco-ai-defense/skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)
 - `.github/ISSUE_TEMPLATE/` -- ideation and brainstorm forms
 - `.github/PULL_REQUEST_TEMPLATE/` -- stage-specific PR templates
 

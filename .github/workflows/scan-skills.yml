@@ -1,0 +1,27 @@
+name: Scan Skills for Security Threats
+
+on:
+  pull_request:
+    paths:
+      - "plugins/human-compound/skills/**"
+      - "plugins/human-compound/agents/**"
+
+permissions:
+  security-events: write
+  contents: read
+
+jobs:
+  scan:
+    uses: cisco-ai-defense/skill-scanner/.github/workflows/scan-skills.yml@main
+    with:
+      skill_path: plugins/human-compound
+      scan_mode: scan-all
+      policy: balanced
+      fail_on_severity: high
+      format: sarif
+      upload_sarif: true
+      lenient: true
+      use_llm: true
+      llm_model: gemini/gemini-3.1-pro-preview
+    secrets:
+      llm_api_key: ${{ secrets.GEMINI_API_KEY }}
