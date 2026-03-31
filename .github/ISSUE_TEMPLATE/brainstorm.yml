@@ -1,0 +1,48 @@
+name: Brainstorm
+description: Start a brainstorm for a feature or improvement
+labels: ["brainstorm"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem description
+      description: What are we trying to solve? Be specific about the user pain or gap.
+      placeholder: "When a user tries to... they can't... because..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: goals
+    attributes:
+      label: Goals
+      description: What does success look like?
+      placeholder: "Users can... / The system handles... / We reduce..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: What boundaries or limitations should we work within?
+      placeholder: "Must work with... / Cannot change... / Budget for..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: prior-art
+    attributes:
+      label: Prior art and links (optional)
+      description: Related issues, existing solutions, competitor examples, or docs.
+      placeholder: "See #45 / Similar to how Stripe handles... / docs/solutions/..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: next-step
+    attributes:
+      label: Next step
+      description: Who will take this into Claude Code for /he:brainstorm?
+      placeholder: "@alice will brainstorm this week"
+    validations:
+      required: false

@@ -1,0 +1,39 @@
+name: Ideation
+description: Propose an idea or improvement for the team to consider
+labels: ["ideation"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Opportunity
+      description: What problem are we solving, or what opportunity are we capturing?
+      placeholder: "Users struggle with... / We're missing... / There's an opportunity to..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: who
+    attributes:
+      label: Who is affected?
+      description: Who benefits from solving this? End users, the team, a specific workflow?
+      placeholder: "End users who... / The engineering team when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: ideas
+    attributes:
+      label: Initial ideas (optional)
+      description: Any early thoughts on approaches? These are starting points, not decisions.
+      placeholder: "We could... / One approach might be..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Links and context (optional)
+      description: Related issues, docs, examples, or prior art.
+      placeholder: "See #123 / Related to docs/solutions/... / Similar to how X works"
+    validations:
+      required: false

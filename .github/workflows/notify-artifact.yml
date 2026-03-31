@@ -1,0 +1,122 @@
+name: Notify Team on Artifact Change
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/brainstorms/**"
+      - "docs/plans/**"
+      - "docs/solutions/**"
+      - "docs/ideation/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-artifact-${{ github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Detect artifact changes and notify
+        env:
+          WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "NOTIFICATION_WEBHOOK_URL not configured. Skipping notification."
+            exit 0
+          fi
+
+          # Get changed files in artifact directories
+          CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- \
+            docs/brainstorms/ \
+            docs/plans/ \
+            docs/solutions/ \
+            docs/ideation/ \
+            2>/dev/null || echo "")
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No artifact files changed."
+            exit 0
+          fi
+
+          AUTHOR="${{ github.actor }}"
+          REPO="${{ github.repository }}"
+          COMMIT_URL="https://github.com/$REPO/commit/${{ github.sha }}"
+
+          # Process each changed file
+          echo "$CHANGED_FILES" | while read -r FILE; do
+            # Skip .gitkeep files
+            if [[ "$FILE" == *".gitkeep" ]]; then
+              continue
+            fi
+
+            # Determine stage from path
+            case "$FILE" in
+              docs/ideation/*)
+                STAGE="Ideation"
+                EMOJI="bulb"
+                ;;
+              docs/brainstorms/*)
+                STAGE="Requirements"
+                EMOJI="memo"
+                ;;
+              docs/plans/*)
+                STAGE="Plan"
+                EMOJI="clipboard"
+                ;;
+              docs/solutions/*)
+                STAGE="Learning"
+                EMOJI="books"
+                ;;
+              *)
+                continue
+                ;;
+            esac
+
+            # Extract title from first heading
+            TITLE=""
+            if [ -f "$FILE" ]; then
+              TITLE=$(grep -m1 '^# ' "$FILE" | sed 's/^# //' || echo "")
+            fi
+
+            if [ -z "$TITLE" ]; then
+              TITLE=$(basename "$FILE" .md)
+            fi
+
+            FILE_URL="https://github.com/$REPO/blob/main/$FILE"
+
+            # Send webhook notification
+            # Generic JSON payload compatible with most webhook services
+            curl -s -X POST "$WEBHOOK_URL" \
+              -H "Content-Type: application/json" \
+              -d "$(jq -n \
+                --arg stage "$STAGE" \
+                --arg title "$TITLE" \
+                --arg author "$AUTHOR" \
+                --arg file "$FILE" \
+                --arg file_url "$FILE_URL" \
+                --arg commit_url "$COMMIT_URL" \
+                --arg repo "$REPO" \
+                --arg emoji "$EMOJI" \
+                --arg text "[$STAGE] $TITLE -- by $AUTHOR" \
+                '{
+                  text: $text,
+                  stage: $stage,
+                  title: $title,
+                  author: $author,
+                  file: $file,
+                  file_url: $file_url,
+                  commit_url: $commit_url,
+                  repo: $repo
+                }'
+              )" || echo "Webhook failed for $FILE (non-fatal)"
+
+            echo "Notified: [$STAGE] $TITLE by $AUTHOR"
+          done

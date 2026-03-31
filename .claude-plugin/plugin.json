@@ -1,0 +1,21 @@
+{
+  "name": "human-compound",
+  "version": "1.0.0",
+  "description": "Human-first, team-driven engineering plugin. All compound-engineering skills and agents plus GitHub-based team coordination.",
+  "license": "MIT",
+  "keywords": [
+    "ai-powered",
+    "human-compound",
+    "team-collaboration",
+    "workflow-automation",
+    "code-review",
+    "knowledge-management",
+    "github-coordination"
+  ],
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}

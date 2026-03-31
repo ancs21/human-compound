@@ -1,0 +1,34 @@
+# human-compound CODEOWNERS
+#
+# Auto-assigns reviewers based on artifact type.
+# Without branch protection requiring reviews, this only assigns -- it does not block merges.
+#
+# CUSTOMIZE: Replace placeholder teams/usernames with your own.
+# Examples:
+#   @your-org/team       -> @myorg/engineering  (or @alice @bob @carol)
+#   @your-org/tech-lead  -> @alice
+#   @your-org/engineers  -> @bob @carol
+
+# Requirements and ideation -- whole team sees these
+docs/brainstorms/       @your-org/team
+docs/ideation/          @your-org/team
+
+# Plans -- tech lead reviews
+docs/plans/             @your-org/tech-lead
+
+# Learnings -- whole team sees these
+docs/solutions/         @your-org/team
+
+# Source code -- engineers review
+src/                    @your-org/engineers
+app/                    @your-org/engineers
+lib/                    @your-org/engineers
+test/                   @your-org/engineers
+tests/                  @your-org/engineers
+spec/                   @your-org/engineers
+
+# Workflow and CI config -- tech lead reviews
+.github/                @your-org/tech-lead
+
+# Fallback -- whole team
+*                       @your-org/team
